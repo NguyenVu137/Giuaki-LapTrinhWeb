@@ -1,0 +1,602 @@
+<!--
+  CV Template (single-file) - Matches the "Yêu cầu giữa kì" checklist.
+  - Replace placeholder texts and image paths with your real info.
+  - Contains: Banner, Navbar, Flex/Grid layout, About, Career Goal, Hobbies,
+    Skills & Languages, Certificates, Projects, Contact, Footer.
+  - Uses CSS3 transforms & animations and has comments for clarity (Clean Code).
+  - Ensure you add at least 4 personal images into ./images/ named photo1.jpg ... photo4.jpg
+-->
+
+<!doctype html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>CV - Đặng Nguyên Vũ</title>
+    <meta name="description" content="CV cá nhân - Đặng Nguyên Vũ">
+
+    <style>
+        /* ==========================
+       Reset & Base
+       ========================== */
+        :root {
+            --accent: #0b78d1;
+            --dark: #0e1724;
+            --muted: #6b7280;
+            --card: #ffffff;
+            --bg: #f4f7fb;
+            --glass: rgba(255, 255, 255, 0.6);
+            --radius: 12px;
+            --max-w: 1100px;
+            font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            height: 100%
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(180deg, var(--bg), #eef4fb);
+            color: var(--dark);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.45;
+            padding: 24px 12px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: var(--max-w)
+        }
+
+        /* ==========================
+       Header: Banner + Navbar
+       ========================== */
+        header {
+            margin-bottom: 20px
+        }
+
+        .banner {
+            background: linear-gradient(90deg, rgba(11, 120, 209, 0.95), rgba(17, 138, 168, 0.95));
+            color: white;
+            border-radius: var(--radius);
+            padding: 28px 28px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 10px 30px rgba(11, 120, 209, 0.12);
+            transform-origin: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .banner::after {
+            /* decorative animated wave */
+            content: "";
+            position: absolute;
+            right: -120px;
+            bottom: -40px;
+            width: 360px;
+            height: 360px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            filter: blur(20px);
+            transform: scale(1);
+            animation: float 10s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-10px)
+            }
+
+            100% {
+                transform: translateY(0)
+            }
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo .avatar {
+            width: 88px;
+            height: 88px;
+            border-radius: 12px;
+            overflow: hidden;
+            flex-shrink: 0;
+            border: 3px solid rgba(255, 255, 255, 0.15)
+        }
+
+        .logo h1 {
+            font-size: 20px;
+            margin: 0
+        }
+
+        .logo p {
+            margin: 0;
+            opacity: 0.95
+        }
+
+        nav {
+            margin-top: 12px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 8px 12px;
+            border-radius: 999px;
+            color: rgba(255, 255, 255, 0.92);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+            transition: transform .18s ease, background .18s ease;
+            display: inline-block
+        }
+
+        .nav-link:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.12)
+        }
+
+        /* ==========================
+       Layout: grid main area
+       ========================== */
+        main {
+            margin-top: 18px;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        /* Left column (sidebar) */
+        .card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06)
+        }
+
+        .profile-pics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px
+        }
+
+        .profile-pics img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            display: block;
+            transition: transform .25s ease
+        }
+
+        .profile-pics img:hover {
+            transform: scale(1.05) rotate(-1deg)
+        }
+
+        .info-row {
+            margin-top: 12px
+        }
+
+        .label {
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 6px
+        }
+
+        .value {
+            font-weight: 600
+        }
+
+        /* Skills list */
+        .skill {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 8px 0
+        }
+
+        .skill .meter {
+            height: 8px;
+            background: #f0f3fb;
+            border-radius: 999px;
+            overflow: hidden;
+            width: 60%
+        }
+
+        .skill .meter>i {
+            display: block;
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), #2cc0c9);
+            width: 0;
+            transition: width .9s cubic-bezier(.2, .9, .23, 1)
+        }
+
+        /* Right column (content) */
+        section {
+            margin-bottom: 18px
+        }
+
+        section h2 {
+            margin: 0 0 10px 0;
+            font-size: 18px
+        }
+
+        .card p {
+            margin: 0 0 10px 0
+        }
+
+        /* Projects grid */
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px
+        }
+
+        .project {
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(15, 23, 42, 0.04);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.99));
+            transition: transform .18s ease, box-shadow .18s ease
+        }
+
+        .project:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 40px rgba(11, 120, 209, 0.06)
+        }
+
+        /* Certificates list */
+        .cert-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px
+        }
+
+        .cert {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px dashed rgba(11, 120, 209, 0.08)
+        }
+
+        /* Contact */
+        .socials {
+            display: flex;
+            gap: 10px
+        }
+
+        .btn {
+            display: inline-flex;
+            gap: 8px;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 999px;
+            text-decoration: none;
+            border: 1px solid rgba(11, 120, 209, 0.12);
+            font-weight: 600
+        }
+
+        /* Responsive */
+        @media (max-width:920px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+
+            .projects {
+                grid-template-columns: 1fr
+            }
+        }
+
+        /* entrance animations (used on load) */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(8px);
+            animation: enter .7s forwards
+        }
+
+        .delay-1 {
+            animation-delay: .12s
+        }
+
+        .delay-2 {
+            animation-delay: .24s
+        }
+
+        .delay-3 {
+            animation-delay: .36s
+        }
+
+        @keyframes enter {
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        /* small utility */
+        .muted {
+            color: var(--muted);
+            font-size: 13px
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header class="fade-in">
+            <div class="banner">
+                <div style="flex:1;display:flex;flex-direction:column;">
+                    <div class="logo">
+                        <div class="avatar">
+                            <img src="img/avatar.jpg" alt="avatar" style="width:100%;height:100%;object-fit:cover">
+                        </div>
+                        <div>
+                            <h1>Đặng Nguyên Vũ</h1>
+                            <p class="muted">Sinh viên Khoa Công nghệ thông tin</p>
+                        </div>
+                    </div>
+
+                    <nav style="margin-top:12px">
+                        <a class="nav-link" href="#about">Giới thiệu</a>
+                        <a class="nav-link" href="#career">Mục tiêu</a>
+                        <a class="nav-link" href="#skills">Kỹ năng</a>
+                        <a class="nav-link" href="#projects">Dự án</a>
+                        <a class="nav-link" href="#contact">Liên hệ</a>
+                    </nav>
+                </div>
+
+                <div style="min-width:220px;display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+                    <div class="muted">CV cá nhân</div>
+                    <div style="font-weight:700;font-size:18px">Công nghệ thông tin</div>
+                    <div class="muted">Cập nhật: <span id="updated">[Ngày]</span></div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- LEFT SIDEBAR -->
+            <aside class="card fade-in delay-1">
+                <!-- Personal photos (>=4) -->
+                <!-- <div class="profile-pics">
+                    <img src="images/photo1.jpg" alt="photo1">
+                    <img src="images/photo2.jpg" alt="photo2">
+                    <img src="images/photo3.jpg" alt="photo3">
+                    <img src="images/photo4.jpg" alt="photo4">
+                </div> -->
+
+                <!-- Contact & basic info -->
+                <div class="info-row">
+                    <div class="label">Thông tin cá nhân</div>
+                    <div class="value">Đặng Nguyên Vũ</div>
+                    <div class="muted">Sinh: 13/07/2005 • Địa chỉ: Tp Hồ Chí Minh</div>
+                </div>
+
+                <div class="info-row">
+                    <div class="label">Mục tiêu nghề nghiệp</div>
+                    <div class="muted">Mong muốn trở thành một lập trình viên chuyên nghiệp, phát triển kỹ năng chuyên môn về web và phần mềm, đóng góp vào các dự án thực tế và học hỏi trong môi trường làm việc hiện đại.</div>
+                </div>
+
+                <div class="info-row">
+                    <div class="label">Liên hệ</div>
+                    <div class="muted">Email: <a href="mailto:nguyenvu4424@gmail.com">nguyenvu4424@gmail.com</a></div>
+                    <div class="muted">Github: <a href="https://github.com/NguyenVu137"
+                            target="_blank">github.com/NguyenVu137</a></div>
+                    <div class="muted">Facebook / Instagram: uv_neyugn_
+</div>
+                </div>
+
+                <hr style="margin:14px 0;border:none;border-top:1px solid rgba(15,23,42,0.04)">
+
+                <div class="info-row">
+                    <div class="label">Ngôn ngữ</div>
+                    <div class="skill">
+                        <div>Tiếng Việt</div>
+                        <div class="muted">Bản ngữ</div>
+                    </div>
+                    <div class="skill">
+                        <div>Tiếng Anh</div>
+                        <div class="muted">IELTS 6.0 / B1</div>
+                    </div>
+                </div>
+
+                <div style="margin-top:10px">
+                    <div class="label">Kỹ năng</div>
+                    <!-- Skill meter - adjust width via inline style or JS -->
+                    <div class="skill">
+                        <div>HTML/CSS</div>
+                        <div class="meter"><i style="width:92%"></i></div>
+                    </div>
+                    <div class="skill">
+                        <div>JavaScript</div>
+                        <div class="meter"><i style="width:78%"></i></div>
+                    </div>
+                    <div class="skill">
+                        <div>Node.js / Express</div>
+                        <div class="meter"><i style="width:70%"></i></div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- RIGHT CONTENT -->
+            <div>
+                <!-- About / Personal Info -->
+                <section id="about" class="card fade-in delay-2">
+                    <h2>Thông tin cá nhân</h2>
+                    <p>Tôi là sinh viên chuyên ngành Công nghệ thông tin với niềm đam mê về lập trình và phát triển web. Tôi yêu thích học hỏi công nghệ mới và không ngừng trau dồi kỹ năng để trở thành một lập trình viên chuyên nghiệp, có khả năng xây dựng các sản phẩm chất lượng và hữu ích.</p>
+
+                    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px">
+                        <div style="flex:1;min-width:220px">
+                            <div class="label">Họ tên</div>
+                            <div class="value">Đặng Nguyên Vũ</div>
+
+                            <div class="label" style="margin-top:8px">Ngày sinh</div>
+                            <div class="muted">13/07/2005</div>
+
+                            <div class="label" style="margin-top:8px">Trình độ</div>
+                            <div class="muted">Đại học - CNTT</div>
+                        </div>
+
+                        <div style="flex:1;min-width:220px">
+                            <div class="label">Sở thích</div>
+                            <div class="muted">• Lập trình<br>• Đọc sách công nghệ<br>• Chơi thể thao</div>
+
+                            <div class="label" style="margin-top:8px">Chứng chỉ / Giải thưởng</div>
+                            <div class="muted">• Không có</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Career goal -->
+                <section id="career" class="card fade-in delay-3">
+                    <h2>Mục tiêu nghề nghiệp</h2>
+                    <p>Mong muốn trở thành một lập trình viên chuyên nghiệp, nâng cao kỹ năng lập trình web và phần mềm, tích lũy kinh nghiệm qua các dự án thực tế và làm việc trong môi trường sáng tạo.</p>
+                </section>
+
+                <!-- Skills & Languages expanded -->
+                <section id="skills" class="card fade-in">
+                    <h2>Kỹ năng & Ngôn ngữ</h2>
+                    <p class="muted">Liệt kê kỹ năng chuyên môn, công cụ, framework, và khả năng ngôn ngữ.</p>
+
+                    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:8px">
+                        <div style="flex:1;min-width:260px">
+                            <h3 style="margin:0 0 8px 0">Kỹ năng chính</h3>
+                            <ul>
+                                <li>HTML, CSS (Responsive, Flexbox, Grid)</li>
+                                <li>JavaScript (ES6+), DOM, Fetch API</li>
+                                <li>Node.js, Express, REST API</li>
+                                <li>Git, GitHub</li>
+                            </ul>
+                        </div>
+
+                        <div style="flex:1;min-width:180px">
+                            <h3 style="margin:0 0 8px 0">Ngôn ngữ</h3>
+                            <ul>
+                                <li>Tiếng Việt — Bản ngữ</li>
+                                <li>Tiếng Anh — Trung cấp (IELTS 6.0)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Projects -->
+                <section id="projects" class="card fade-in">
+                    <h2>Dự án</h2>
+                    <p class="muted">Chọn 2-4 dự án tiêu biểu: tên, mô tả ngắn, vai trò, công nghệ, link (nếu có).</p>
+
+                    <div class="projects" style="margin-top:12px">
+                        <article class="project">
+                            <strong>EV Marketplace — Data Portal</strong>
+                            <div class="muted" style="font-size:13px;margin-top:6px">Mô tả: Xây dựng chợ dữ liệu phân
+                                tích EV, tính năng: tìm kiếm, lọc, upload dataset.</div>
+                            <div style="margin-top:8px;font-size:13px"><em>Vai trò:</em> Fullstack Dev — Node.js,
+                                Express, MySQL, React (nếu có).</div>
+                        </article>
+
+                        <article class="project">
+                            <strong>Portfolio Website</strong>
+                            <div class="muted" style="font-size:13px;margin-top:6px">Mô tả: Website cá nhân responsive,
+                                animation CSS, contact form.</div>
+                            <div style="margin-top:8px;font-size:13px"><em>Vai trò:</em> Frontend — HTML/CSS,
+                                JavaScript.</div>
+                        </article>
+
+                        <article class="project">
+                            <strong>Shopee Website</strong>
+                            <div class="muted" style="font-size:13px;margin-top:6px">Mô tả: Xây dựng lại shopee bằng html/css thuần.</div>
+                            <div style="margin-top:8px;font-size:13px"><em>Vai trò:</em> Frontend — HTML/CSS,
+                                JavaScript.</div>
+                        </article>
+
+                        <article class="project">
+                            <strong>W3-Bands Website</strong>
+                            <div class="muted" style="font-size:13px;margin-top:6px">Mô tả: Xây dựng web thuần HTML/CSS</div>
+                            <div style="margin-top:8px;font-size:13px"><em>Vai trò:</em> Frontend — HTML/CSS,
+                                JavaScript.</div>
+                        </article>
+
+                        <!-- Add more project placeholders here -->
+                    </div>
+                </section>
+
+                <!-- Certificates / Awards -->
+                <section id="certs" class="card fade-in">
+                    <h2>Chứng chỉ & Giải thưởng</h2>
+                    <div class="cert-list" style="margin-top:8px">
+                        <div class="cert">Không có</div>
+                    </div>
+                </section>
+
+                <!-- Contact -->
+                <section id="contact" class="card fade-in">
+                    <h2>Liên hệ</h2>
+                    <p class="muted">Github, Facebook, Instagram, Email — đặt link đầy đủ để người chấm có thể truy cập.
+                    </p>
+
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+                        <a class="btn" href="https://github.com/NguyenVu137" target="_blank">Github</a>
+                        <a class="btn" href="mailto:nguyenvu4424@gmail.com">Email</a>
+                        <a class="btn" href="https://www.facebook.com/nguyen.vu.590789" target="_blank">Facebook</a>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+
+        <footer style="margin-top:18px;text-align:center;color:var(--muted);font-size:13px">
+            © 2025 Đặng Nguyên Vũ — CV được tạo theo mẫu yêu cầu giữa kỳ.
+        </footer>
+    </div>
+
+    <script>
+        // ==========================
+        // Small JS for interactivity and animations
+        // ==========================
+
+        // Animate skill meters on load
+        window.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.meter > i').forEach((el) => {
+                // read width from inline style; if 0, set default
+                const w = el.style.width || '60%';
+                // small timeout to trigger CSS transition
+                setTimeout(() => { el.style.width = w; }, 80);
+            });
+
+            // set updated date
+            const el = document.getElementById('updated');
+            if (el) el.textContent = new Date().toLocaleDateString('vi-VN');
+        });
+
+        // Simple smooth scroll for nav links
+        document.querySelectorAll('nav a').forEach(a => {
+            a.addEventListener('click', (e) => {
+                e.preventDefault();
+                const id = a.getAttribute('href').slice(1);
+                const target = document.getElementById(id);
+                if (target) { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+            });
+        });
+    </script>
+</body>
+
+</html>
